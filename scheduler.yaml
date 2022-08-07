@@ -1,0 +1,18 @@
+apiVersion: kubescheduler.config.k8s.io/v1beta1
+kind: KubeSchedulerConfiguration
+clientConnection:
+  kubeconfig: /mnt/d/src/go_work/customScheduler/scheduler.conf
+profiles:
+- schedulerName: custom-scheduler
+  plugins:
+    score:
+      enabled:
+      - name: "NetworkTraffic"
+      disabled:
+      - name: "*"
+  pluginConfig:
+    - name: "NetworkTraffic"
+      args:
+        ip: "http://10.0.0.4:9090"
+        deviceName: "eth0"
+        timeRange: 60
